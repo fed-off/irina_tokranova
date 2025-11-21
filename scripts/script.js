@@ -93,6 +93,82 @@ window.addEventListener('scroll', () => {
 });
 
 // ========================================
+// Before/After Slider
+// ========================================
+const beforeAfterSliders = document.querySelectorAll('.before-after-slider');
+
+beforeAfterSliders.forEach(slider => {
+  const container = slider.querySelector('.before-after-slider__container');
+  const beforeImage = slider.querySelector('.before-after-slider__image_before');
+  const divider = slider.querySelector('.before-after-slider__divider');
+  const handle = slider.querySelector('.before-after-slider__handle');
+
+  let isDragging = false;
+
+  // Set initial position to 50%
+  const setPosition = (percentage) => {
+    // Clamp percentage between 0 and 100
+    percentage = Math.max(0, Math.min(100, percentage));
+
+    const rightClip = 100 - percentage;
+    beforeImage.style.clipPath = `inset(0 ${rightClip}% 0 0)`;
+    divider.style.left = `${percentage}%`;
+  };
+
+  // Get percentage from mouse/touch position
+  const getPercentage = (clientX) => {
+    const rect = container.getBoundingClientRect();
+    const x = clientX - rect.left;
+    return (x / rect.width) * 100;
+  };
+
+  // Mouse events
+  const startDragging = (e) => {
+    isDragging = true;
+    handle.style.cursor = 'grabbing';
+    e.preventDefault();
+  };
+
+  const stopDragging = () => {
+    isDragging = false;
+    handle.style.cursor = 'grab';
+  };
+
+  const onMouseMove = (e) => {
+    if (!isDragging) return;
+    const percentage = getPercentage(e.clientX);
+    setPosition(percentage);
+  };
+
+  // Touch events
+  const onTouchMove = (e) => {
+    if (!isDragging) return;
+    const touch = e.touches[0];
+    const percentage = getPercentage(touch.clientX);
+    setPosition(percentage);
+  };
+
+  // Event listeners for mouse
+  divider.addEventListener('mousedown', startDragging);
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', stopDragging);
+
+  // Event listeners for touch
+  divider.addEventListener('touchstart', (e) => {
+    startDragging(e);
+  });
+  document.addEventListener('touchmove', onTouchMove);
+  document.addEventListener('touchend', stopDragging);
+
+  // Click on container to move divider
+  container.addEventListener('click', (e) => {
+    if (e.target === handle || e.target.closest('.before-after-slider__handle')) return;
+    const percentage = getPercentage(e.clientX);
+    setPosition(percentage);
+  });
+});
+
+// ========================================
 // Intersection Observer for Animations
 // ========================================
 const observerOptions = {
