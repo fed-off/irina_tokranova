@@ -1,9 +1,152 @@
 // ========================================
+// Modal System
+// ========================================
+
+// Modal handler function
+function createModalHandler(modalId, openButtonId) {
+  const modal = document.getElementById(modalId);
+  const openButton = document.getElementById(openButtonId);
+  const closeButton = modal?.querySelector('.modal__close');
+  const overlay = modal?.querySelector('.modal__overlay');
+  const container = modal?.querySelector('.modal__container');
+
+  // Open modal
+  if (openButton) {
+    openButton.addEventListener('click', () => {
+      modal.classList.add('modal_active');
+      document.body.style.overflow = 'hidden';
+
+      // Focus modal container without visual outline
+      if (container) {
+        container.focus();
+      }
+    });
+  }
+
+  // Close modal function
+  function closeModal() {
+    if (modal) {
+      modal.classList.remove('modal_active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Close on button click
+  if (closeButton) {
+    closeButton.addEventListener('click', closeModal);
+  }
+
+  // Close on overlay click
+  if (overlay) {
+    overlay.addEventListener('click', closeModal);
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('modal_active')) {
+      closeModal();
+    }
+  });
+}
+
+// Initialize modals
+createModalHandler('priceModal', 'openPriceModal');
+createModalHandler('privacyModal', 'openPrivacyModal');
+
+// Booking modal with multiple open buttons
+const bookingModal = document.getElementById('bookingModal');
+const openBookingButtons = [
+  document.getElementById('openBookingModal'),
+  document.getElementById('openBookingModalHero')
+];
+
+if (bookingModal) {
+  const closeButton = bookingModal.querySelector('.modal__close');
+  const overlay = bookingModal.querySelector('.modal__overlay');
+  const container = bookingModal.querySelector('.modal__container');
+
+  // Open modal from multiple buttons
+  openBookingButtons.forEach(button => {
+    if (button) {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        bookingModal.classList.add('modal_active');
+        document.body.style.overflow = 'hidden';
+
+        // Focus modal container without visual outline
+        if (container) {
+          container.focus();
+        }
+      });
+    }
+  });
+
+  // Close modal function
+  function closeBookingModal() {
+    bookingModal.classList.remove('modal_active');
+    document.body.style.overflow = '';
+  }
+
+  // Close on button click
+  if (closeButton) {
+    closeButton.addEventListener('click', closeBookingModal);
+  }
+
+  // Close on overlay click
+  if (overlay) {
+    overlay.addEventListener('click', closeBookingModal);
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && bookingModal.classList.contains('modal_active')) {
+      closeBookingModal();
+    }
+  });
+}
+
+// ========================================
+// Active Navigation Link on Scroll
+// ========================================
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav__link');
+
+function activateNavLink() {
+  const scrollY = window.pageYOffset;
+  const headerHeight = document.querySelector('.header').offsetHeight;
+
+  sections.forEach(section => {
+    const sectionHeight = section.offsetHeight;
+    const sectionTop = section.offsetTop - headerHeight - 100;
+    const sectionId = section.getAttribute('id');
+
+    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+      navLinks.forEach(link => {
+        link.classList.remove('nav__link_active');
+        if (link.getAttribute('href') === `#${sectionId}`) {
+          link.classList.add('nav__link_active');
+        }
+      });
+    }
+  });
+
+  // Remove active class when at the top of the page
+  if (scrollY < 100) {
+    navLinks.forEach(link => link.classList.remove('nav__link_active'));
+  }
+}
+
+// Activate on scroll
+window.addEventListener('scroll', activateNavLink);
+
+// Activate on page load
+window.addEventListener('load', activateNavLink);
+
+// ========================================
 // Mobile Menu Toggle
 // ========================================
 const burger = document.querySelector('.burger');
 const nav = document.querySelector('.header__nav');
-const navLinks = document.querySelectorAll('.nav__link');
 const body = document.body;
 
 // Toggle mobile menu
@@ -126,7 +269,9 @@ beforeAfterSliders.forEach(slider => {
   const startDragging = (e) => {
     isDragging = true;
     handle.style.cursor = 'grabbing';
-    e.preventDefault();
+    if (e.type === 'mousedown') {
+      e.preventDefault();
+    }
   };
 
   const stopDragging = () => {
@@ -143,29 +288,23 @@ beforeAfterSliders.forEach(slider => {
   // Touch events
   const onTouchMove = (e) => {
     if (!isDragging) return;
+    e.preventDefault();
     const touch = e.touches[0];
     const percentage = getPercentage(touch.clientX);
     setPosition(percentage);
   };
 
   // Event listeners for mouse
+  handle.addEventListener('mousedown', startDragging);
   divider.addEventListener('mousedown', startDragging);
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', stopDragging);
 
-  // Event listeners for touch
-  divider.addEventListener('touchstart', (e) => {
-    startDragging(e);
-  });
-  document.addEventListener('touchmove', onTouchMove);
+  // Event listeners for touch - только на handle и divider
+  handle.addEventListener('touchstart', startDragging);
+  divider.addEventListener('touchstart', startDragging);
+  document.addEventListener('touchmove', onTouchMove, { passive: false });
   document.addEventListener('touchend', stopDragging);
-
-  // Click on container to move divider
-  container.addEventListener('click', (e) => {
-    if (e.target === handle || e.target.closest('.before-after-slider__handle')) return;
-    const percentage = getPercentage(e.clientX);
-    setPosition(percentage);
-  });
 });
 
 // ========================================
@@ -174,6 +313,12 @@ beforeAfterSliders.forEach(slider => {
 const observerOptions = {
   threshold: 0.1,
   rootMargin: '0px 0px -50px 0px'
+};
+
+// Специальные настройки для секции портфолио (большая секция)
+const portfolioObserverOptions = {
+  threshold: 0.05,
+  rootMargin: '0px 0px 100px 0px'
 };
 
 const animateOnScroll = (entries, observer) => {
@@ -186,20 +331,32 @@ const animateOnScroll = (entries, observer) => {
 };
 
 const observer = new IntersectionObserver(animateOnScroll, observerOptions);
+const portfolioObserver = new IntersectionObserver(animateOnScroll, portfolioObserverOptions);
 
 // Observe sections for animation
 document.addEventListener('DOMContentLoaded', () => {
   const sections = document.querySelectorAll('section');
+  const isMobile = window.innerWidth <= 768;
 
   sections.forEach(section => {
-    section.style.opacity = '0';
-    section.style.transform = 'translateY(30px)';
-    section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(section);
-  });
-});
+    // Отключаем анимацию на мобильных устройствах
+    if (isMobile) {
+      section.style.opacity = '1';
+      section.style.transform = 'translateY(0)';
+    } else {
+      section.style.opacity = '0';
+      section.style.transform = 'translateY(30px)';
+      section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
 
-// ========================================
+      // Используем специальный observer для секции портфолио
+      if (section.id === 'portfolio') {
+        portfolioObserver.observe(section);
+      } else {
+        observer.observe(section);
+      }
+    }
+  });
+});// ========================================
 // Portfolio Image Modal (Simple Lightbox)
 // ========================================
 const portfolioItems = document.querySelectorAll('.portfolio__item');
@@ -238,21 +395,26 @@ portfolioItems.forEach(item => {
 
     modal.appendChild(modalImg);
     document.body.appendChild(modal);
-    document.body.style.overflow = 'hidden';
+
+    // Close modal function
+    const closeModal = () => {
+      modal.style.animation = 'fadeOut 0.3s ease';
+      modal.style.pointerEvents = 'none';
+
+      modal.addEventListener('animationend', () => {
+        if (document.body.contains(modal)) {
+          document.body.removeChild(modal);
+        }
+      }, { once: true });
+    };
 
     // Close modal on click
-    modal.addEventListener('click', () => {
-      modal.style.animation = 'fadeOut 0.3s ease';
-      setTimeout(() => {
-        document.body.removeChild(modal);
-        document.body.style.overflow = '';
-      }, 300);
-    });
+    modal.addEventListener('click', closeModal);
 
     // Close modal on Escape key
     const closeOnEscape = (e) => {
       if (e.key === 'Escape') {
-        modal.click();
+        closeModal();
         document.removeEventListener('keydown', closeOnEscape);
       }
     };
@@ -274,30 +436,6 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
-
-// ========================================
-// Active Navigation Link on Scroll
-// ========================================
-const sections = document.querySelectorAll('section[id]');
-
-window.addEventListener('scroll', () => {
-  const scrollPosition = window.scrollY + 100;
-
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.offsetHeight;
-    const sectionId = section.getAttribute('id');
-
-    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-      navLinks.forEach(link => {
-        link.classList.remove('nav__link_active');
-        if (link.getAttribute('href') === `#${sectionId}`) {
-          link.classList.add('nav__link_active');
-        }
-      });
-    }
-  });
-});
 
 // ========================================
 // Lazy Loading Images
