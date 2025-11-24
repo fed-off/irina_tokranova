@@ -639,6 +639,11 @@ button {
     flex-grow: 1;
 }
 
+.modal__content.modal__content--price {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 .modal__content::-webkit-scrollbar {
     width: 8px;
 }
@@ -678,7 +683,8 @@ button {
     outline: none;
 }
 
-.price-list__item:focus {
+.price-list__item:focus,
+.price-list__item:hover {
     background-color: rgba(242, 98, 16, 0.1);
     outline: 2px solid var(--color-main-orange);
     outline-offset: -2px;

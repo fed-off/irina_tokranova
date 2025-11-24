@@ -466,6 +466,9 @@ const createBackToTopButton = () => {
   button.setAttribute('aria-label', 'Вернуться наверх');
   button.style.cssText = `
         position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         bottom: 30px;
         right: 30px;
         width: 50px;
@@ -473,24 +476,49 @@ const createBackToTopButton = () => {
         border-radius: 50%;
         background: linear-gradient(135deg, var(--color-main-orange), var(--color-secondary-orange));
         color: white;
-        font-size: 24px;
+        font-size: 32px;
         border: none;
         cursor: pointer;
+        transform: translateY(140%); /* глубже спрятана */
         opacity: 0;
         visibility: hidden;
-        transition: all 0.3s ease;
+        pointer-events: none;
+        transition: transform 0.6s cubic-bezier(.2,.8,.2,1), opacity 0.45s ease;
         z-index: 999;
-        box-shadow: 0 4px 12px rgba(242, 98, 16, 0.3);
+        box-shadow: 0 6px 18px rgba(242, 98, 16, 0.28);
     `;
 
   document.body.appendChild(button);
 
+  button.dataset.visible = 'false';
+
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 500) {
-      button.style.opacity = '1';
+    const shouldShow = window.scrollY > 500;
+    if (shouldShow && button.dataset.visible === 'false') {
+      button.dataset.visible = 'true';
+      // делаем видимой перед анимацией
       button.style.visibility = 'visible';
-    } else {
+      // небольшая задержка гарантирует триггер transition в некоторых браузерах
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          button.style.pointerEvents = 'auto';
+          button.style.transform = 'translateY(0)';
+          button.style.opacity = '1';
+        });
+      });
+    } else if (!shouldShow && button.dataset.visible === 'true') {
+      button.dataset.visible = 'false';
+      // прячем: сначала сдвигаем вниз и делаем прозрачной
+      button.style.transform = 'translateY(140%)';
       button.style.opacity = '0';
+      // pointer-events убираем сразу, чтобы не мешать кликам по странице
+      button.style.pointerEvents = 'none';
+      // visibility будет скрыта по окончании transition (см. ниже)
+    }
+  });
+
+  button.addEventListener('transitionend', (e) => {
+    if (e.propertyName === 'transform' && button.dataset.visible === 'false') {
       button.style.visibility = 'hidden';
     }
   });
@@ -503,14 +531,18 @@ const createBackToTopButton = () => {
   });
 
   button.addEventListener('mouseenter', () => {
-    button.style.transform = 'translateY(-5px)';
+    // небольшое приподнимание — не ломает основную анимацию
+    if (button.dataset.visible === 'true') {
+      button.style.transform = 'translateY(-8px)';
+    }
   });
 
   button.addEventListener('mouseleave', () => {
-    button.style.transform = 'translateY(0)';
+    if (button.dataset.visible === 'true') {
+      button.style.transform = 'translateY(0)';
+    }
   });
 };
-
 createBackToTopButton();
 
 // ========================================

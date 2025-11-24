@@ -10,12 +10,12 @@
   <link rel="stylesheet" href="styles/style.css">
 </head>
 
-<body class="page">
+<body class="page" id="top">
   <!-- Header -->
   <header class="header">
     <div class="header__container container">
       <div class="header__logo">
-        <span class="header__logo-text">TOKRANOVA</span>
+        <a href="#top" class="header__logo-text">TOKRANOVA</a>
       </div>
       <nav class="header__nav nav">
         <ul class="nav__list">
@@ -651,7 +651,7 @@
         <div class="modal__header">
           <h2 class="modal__title">Прайс-лист услуг</h2>
         </div>
-        <div class="modal__content">
+        <div class="modal__content modal__content--price">
           <ul class="price-list">
             <li class="price-list__item" tabindex="0">
               <span class="price-list__service">Консультация барбера</span>
@@ -792,9 +792,6 @@
         </div>
         <div class="modal__content">
           <div class="booking-content">
-            <p class="booking-content__text">
-              Выберите удобный способ связи для записи:
-            </p>
             <ul class="booking-contacts">
               <li class="booking-contacts__item">
                 <a href="tel:+79883560333" class="booking-contacts__link">
