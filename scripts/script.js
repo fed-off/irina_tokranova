@@ -545,8 +545,3 @@ const createBackToTopButton = () => {
 };
 createBackToTopButton();
 
-// ========================================
-// Console Welcome Message
-// ========================================
-console.log('%c👋 Добро пожаловать на сайт барбершопа!', 'font-size: 16px; color: #f26210; font-weight: bold;');
-console.log('%cДля записи звоните: +7 (900) 123-45-67', 'font-size: 14px; color: #10cb39;');
