@@ -1416,14 +1416,80 @@ button {
     background-color: var(--color-card-bg);
     border-radius: var(--radius-md);
     transition: all var(--transition-base);
+    position: relative;
 }
 
-.social__link:hover {
+.social__link::after {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 16px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    width: 160px;
+    height: 160px;
+    background-color: var(--color-main-white);
+    background-size: 140px 140px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+    z-index: 99;
+}
+
+.social__link::before {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 1px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    border: 8px solid transparent;
+    border-top-color: var(--color-main-white);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.social__link_whatsapp::after {
+    background-image: url('../images/whatsapp-qr.png');
+}
+
+.social__link_telegram::after {
+    background-image: url('../images/telegram-qr.png');
+}
+
+.social__link_vk::after {
+    background-image: url('../images/vkontakte-qr.png');
+}
+
+.social__link_instagram::after {
+    background-image: url('../images/instagram-qr.png');
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 1025px) {
+    .social__link:hover::after,
+    .social__link:hover::before,
+    .social__link:focus::after,
+    .social__link:focus::before {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.social__link:hover, 
+.social__link:focus {
     background-color: var(--color-main-orange);
     transform: translateY(-3px);
 }
 
-.social__link:hover .social__icon {
+.social__link:hover .social__icon,
+.social__link:focus .social__icon {
     background-color: var(--color-main-white);
 }
 
@@ -1432,6 +1498,169 @@ button {
     height: 24px;
     background-color: var(--color-main-white);
     transition: background-color var(--transition-base);
+}
+
+/* ========================================
+   QR Code Common Styles
+   ======================================== */
+/* Base QR popup styles */
+.social__link,
+.booking-contacts__link,
+.footer__developer-link_qr {
+    position: relative;
+}
+
+/* QR code popup (centered above element) */
+.social__link::after,
+.footer__developer-link_qr::after {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 16px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    width: 160px;
+    height: 160px;
+    background-color: var(--color-main-white);
+    background-size: 140px 140px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+    z-index: 99;
+}
+
+/* QR code arrow (centered above element) */
+.social__link::before,
+.footer__developer-link_qr::before {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 1px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    border: 8px solid transparent;
+    border-top-color: var(--color-main-white);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+    z-index: 100;
+    pointer-events: none;
+}
+
+/* QR code popup (above element, aligned to right) */
+.booking-contacts__link_whatsapp::after,
+.booking-contacts__link_telegram::after,
+.booking-contacts__link_vk::after,
+.booking-contacts__link_instagram::after {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 16px);
+    right: 0;
+    transform: translateY(10px);
+    width: 160px;
+    height: 160px;
+    background-color: var(--color-main-white);
+    background-size: 140px 140px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+    z-index: 99;
+}
+
+/* QR code arrow (above element, aligned to right) */
+.booking-contacts__link_whatsapp::before,
+.booking-contacts__link_telegram::before,
+.booking-contacts__link_vk::before,
+.booking-contacts__link_instagram::before {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 1px);
+    right: 16px;
+    transform: translateY(10px);
+    border: 8px solid transparent;
+    border-top-color: var(--color-main-white);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.booking-contacts__link_whatsapp::after {
+    bottom: calc(50% + 16px);
+}
+
+.booking-contacts__link_whatsapp::before {
+    bottom: calc(50% + 1px);
+}
+
+/* QR code images for each social network */
+.social__link_whatsapp::after,
+.booking-contacts__link_whatsapp::after {
+    background-image: url('../images/whatsapp-qr.png');
+}
+
+.social__link_telegram::after,
+.booking-contacts__link_telegram::after {
+    background-image: url('../images/telegram-qr.png');
+}
+
+.social__link_vk::after,
+.booking-contacts__link_vk::after {
+    background-image: url('../images/vkontakte-qr.png');
+}
+
+.social__link_instagram::after,
+.booking-contacts__link_instagram::after {
+    background-image: url('../images/instagram-qr.png');
+}
+
+.footer__developer-link_qr::after {
+    background-image: url('../images/developer-qr.png');
+}
+
+/* Show QR codes on hover/focus (desktop only) */
+@media (hover: hover) and (pointer: fine) and (min-width: 1025px) {
+    .social__link:hover::after,
+    .social__link:hover::before,
+    .social__link:focus::after,
+    .social__link:focus::before,
+    .footer__developer-link_qr:hover::after,
+    .footer__developer-link_qr:hover::before,
+    .footer__developer-link_qr:focus::after,
+    .footer__developer-link_qr:focus::before {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+    }
+    
+    .booking-contacts__link:hover::after,
+    .booking-contacts__link:hover::before,
+    .booking-contacts__link:focus::after,
+    .booking-contacts__link:focus::before {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 1024px) {
+    .social__link::after,
+    .social__link::before,
+    .booking-contacts__link::after,
+    .booking-contacts__link::before,
+    .footer__developer-link_qr::after,
+    .footer__developer-link_qr::before {
+        display: none;
+    }
 }
 
 .social__icon_whatsapp {
@@ -1752,6 +1981,8 @@ button {
         justify-self: center;
     }
 }
+
+
 
 @media (max-width: 480px) {
     .hero__title {
