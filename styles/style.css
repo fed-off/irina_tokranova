@@ -369,14 +369,14 @@ button {
     min-height: 100%;
 }
 
-.about__features {
-  margin-top: auto;
-}
-
 .features {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--spacing-md);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: auto;
 }
 
 .features__item {
@@ -1193,6 +1193,15 @@ button {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: var(--spacing-lg);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.reviews__grid > li {
+    list-style: none;
+    display: flex;
+    height: 100%;
 }
 
 .review-card {
@@ -1200,6 +1209,9 @@ button {
     border-radius: var(--radius-lg);
     padding: var(--spacing-lg);
     transition: transform var(--transition-base);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .review-card:hover {
@@ -1267,6 +1279,8 @@ button {
 .faq__list {
     max-width: 800px;
     margin: 0 auto;
+    list-style: none;
+    padding: 0;
 }
 
 .faq__item {
@@ -1274,6 +1288,7 @@ button {
     border-radius: var(--radius-md);
     margin-bottom: var(--spacing-sm);
     overflow: hidden;
+    list-style: none;
 }
 
 .faq__question {
@@ -1349,8 +1364,19 @@ button {
     gap: var(--spacing-xl);
 }
 
+.contacts__info {
+    font-style: normal;
+}
+
+.contacts__info > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
 .contacts__item {
     margin-bottom: var(--spacing-lg);
+    list-style: none;
 }
 
 .contacts__subtitle {
