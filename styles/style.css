@@ -2049,6 +2049,18 @@ button {
     .about__features {
         grid-template-columns: 1fr 1fr 1fr;
     }
+
+    .services__list {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .portfolio__slider-list {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .reviews__grid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }
 
 
@@ -2067,6 +2079,14 @@ button {
         left: 20px;
         right: 20px;
         grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .portfolio__slider-list {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+
+    .contacts__content {
+        grid-template-columns: 1fr 1fr;
     }
 }
 
@@ -2132,7 +2152,8 @@ button {
     }
     
     .portfolio__slider-list {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: var(--spacing-sm);
     }
     
     .before-after-slider__handle {
