@@ -945,11 +945,11 @@ button {
     width: 40px;
     height: 40px;
     mask-image: url('../images/whatsapp.svg');
-    mask-size: contain;
+    mask-size: 40px;
     mask-repeat: no-repeat;
     mask-position: center;
     -webkit-mask-image: url('../images/whatsapp.svg');
-    -webkit-mask-size: contain;
+    -webkit-mask-size: 40px;
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
 }
@@ -980,11 +980,11 @@ button {
     width: 40px;
     height: 40px;
     mask-image: url('../images/insta.svg');
-    mask-size: contain;
+    mask-size: 40px;
     mask-repeat: no-repeat;
     mask-position: center;
     -webkit-mask-image: url('../images/insta.svg');
-    -webkit-mask-size: contain;
+    -webkit-mask-size: 40px;
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
 }
