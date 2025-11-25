@@ -1442,11 +1442,6 @@ button {
 .contacts {
     padding: var(--spacing-xxl) 0;
     background-color: var(--color-main-black);
-    background-image: url('../images/pole.png');
-    background-repeat: no-repeat;
-    background-position: right bottom;
-    background-size: auto 80%;
-    position: relative;
 }
 
 .contacts__content {
