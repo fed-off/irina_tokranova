@@ -1968,19 +1968,8 @@ button {
     }
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-    :root {
-        --spacing-xl: 32px;
-        --spacing-xxl: 40px;
-        --header-height: 70px;
-    }
-    
-    .section-title {
-        font-size: 32px;
-        margin-bottom: var(--spacing-lg);
-    }
-    
+/* Tablet & Mobile */
+@media (max-width: 1024px) {
     /* Header Mobile */
     .header__nav {
         position: fixed;
@@ -2027,6 +2016,20 @@ button {
     
     .burger {
         display: flex;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    :root {
+        --spacing-xl: 32px;
+        --spacing-xxl: 40px;
+        --header-height: 70px;
+    }
+    
+    .section-title {
+        font-size: 32px;
+        margin-bottom: var(--spacing-lg);
     }
     
     /* Hero Mobile */
