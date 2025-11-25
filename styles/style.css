@@ -73,6 +73,14 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Righteous';
+    src: url('../fonts/righteous-400.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* ========================================
    CSS Variables
    ======================================== */
@@ -91,6 +99,7 @@
     /* Typography */
     --font-family-base: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-family-heading: 'Exo 2', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-family-logo: 'Righteous', 'Exo 2', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-size-base: 16px;
     --line-height-base: 1.6;
     
@@ -268,7 +277,7 @@ button {
 }
 
 .header__logo-text {
-    font-family: var(--font-family-heading);
+    font-family: var(--font-family-logo);
     font-size: 24px;
     font-weight: 700;
     color: var(--color-main-orange);
@@ -1825,7 +1834,7 @@ button {
 }
 
 .footer__title {
-    font-family: var(--font-family-heading);
+    font-family: var(--font-family-logo);
     font-size: 24px;
     font-weight: 700;
     color: var(--color-main-orange);
