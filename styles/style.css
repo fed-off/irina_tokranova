@@ -324,18 +324,24 @@ button {
 .burger {
     display: none;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
     width: 30px;
-    height: 24px;
-    padding: 0;
+    height: 30px;
+    padding: 3px 0;
+    overflow: hidden;
 }
 
 .burger__line {
     width: 100%;
     height: 3px;
     background-color: var(--color-main-white);
-    transition: all var(--transition-base);
     border-radius: 2px;
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.burger__line:nth-child(2) {
+    transition: transform 0.3s cubic-bezier(0.87, 0, 0.13, 1);
 }
 
 .burger_active .burger__line:nth-child(1) {
@@ -343,11 +349,20 @@ button {
 }
 
 .burger_active .burger__line:nth-child(2) {
-    opacity: 0;
+    transform: translateX(50px);
 }
 
 .burger_active .burger__line:nth-child(3) {
     transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Mobile Navigation Elements */
+.nav__item_mobile-only {
+    display: none;
+}
+
+.button_fullwidth {
+    width: 100%;
 }
 
 /* ========================================
@@ -1973,28 +1988,37 @@ button {
         left: 0;
         right: 0;
         background-color: rgba(28, 28, 28, 0.98);
-        padding: var(--spacing-md);
-        transform: translateY(-100%);
-        opacity: 0;
-        visibility: hidden;
-        transition: all var(--transition-base);
+        padding: 0 var(--spacing-md);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
     }
     
     .header__nav_active {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
+        max-height: 500px;
+        padding: var(--spacing-md);
     }
     
     .nav__list {
         flex-direction: column;
         gap: var(--spacing-sm);
     }
+
+    .nav__item {
+        display: block;
+        width: 50%;
+    }
     
     .nav__link {
         display: block;
         padding: var(--spacing-xs) 0;
         font-size: 18px;
+        text-align: center;
+    }
+    
+    .nav__item_mobile-only {
+        display: block;
+        margin-top: var(--spacing-xs);
     }
     
     .header__button {

@@ -57,7 +57,8 @@ createModalHandler('privacyModal', 'openPrivacyModal');
 const bookingModal = document.getElementById('bookingModal');
 const openBookingButtons = [
   document.getElementById('openBookingModal'),
-  document.getElementById('openBookingModalHero')
+  document.getElementById('openBookingModalHero'),
+  document.getElementById('openBookingModalMobile')
 ];
 
 if (bookingModal) {
@@ -72,6 +73,14 @@ if (bookingModal) {
         e.preventDefault();
         bookingModal.classList.add('modal_active');
         document.body.style.overflow = 'hidden';
+
+        // Close mobile menu if open
+        const burger = document.querySelector('.burger');
+        const nav = document.querySelector('.header__nav');
+        if (nav && nav.classList.contains('header__nav_active')) {
+          burger.classList.remove('burger_active');
+          nav.classList.remove('header__nav_active');
+        }
 
         // Focus modal container without visual outline
         if (container) {
