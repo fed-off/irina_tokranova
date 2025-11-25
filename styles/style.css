@@ -391,7 +391,7 @@ button {
     min-height: 600px;
     padding: var(--spacing-xxl) var(--container-padding);
     position: relative;
-    background-image: url('../images/hero-barber.png');
+    background-image: url('../images/hero-barber.webp');
     background-position: right top;
     background-repeat: no-repeat;
     background-size: auto 100%;
