@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /scripts/
+
+Sitemap: https://fed-off.github.io/irina_tokranova/sitemap.xml
